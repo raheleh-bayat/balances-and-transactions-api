@@ -18,5 +18,16 @@
         "react"
     ],
     "rules": {
-    }
+        "@typescript-eslint/no-explicit-any": "error"
+    },
+    "overrides": [
+        {
+            "files": [
+                "*.test.ts"
+            ], // Specify the file pattern
+            "rules": {
+                "@typescript-eslint/no-explicit-any": "off" // Disable the rule for test files
+            }
+        }
+    ]
 }
