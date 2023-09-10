@@ -1,5 +1,4 @@
 import request from 'supertest';
-import { getHistoricalBalance } from "../../src/services/getHistoricalBalances";
 import app from "../../src/app";
 
 describe('GET /historical-balance', () => {

@@ -1,7 +1,7 @@
 import moment from "moment";
 import axios from 'axios';
 
-export function getHistoricalBalance(from: string, to: string, sort: string): Promise<any> {
+export function getHistoricalBalance(from: string, to: string, sort: string): Promise<[]> {
   async function axiosApiCall() {
     try {
       const response = await axios.get(
@@ -13,9 +13,16 @@ export function getHistoricalBalance(from: string, to: string, sort: string): Pr
         },
       );
 
+      interface Tranaction {
+        date: string;
+        amount: number;
+        currency: string
+        status: string
+      }
+
       // sort transactions by date
-      let transactions = response.data.transactions;
-      transactions.sort((a: any, b: any) => {
+      const transactions = response.data.transactions;
+      transactions.sort((a: Tranaction, b: Tranaction) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
         return dateA.getTime() - dateB.getTime();
@@ -27,6 +34,8 @@ export function getHistoricalBalance(from: string, to: string, sort: string): Pr
         amount: number;
         currency: string
       }
+
+
 
       const historicalBalances: { [key: string]: Balance } = {}
       let totalBalance: number = 0;
@@ -51,8 +60,8 @@ export function getHistoricalBalance(from: string, to: string, sort: string): Pr
         }
       }
 
-      let result: any = [];
-      Object.entries(historicalBalances).forEach(([balanceDate, balance], index) => {
+      const result: Balance[] = [];
+      Object.entries(historicalBalances).forEach(([balanceDate, balance]) => {
         if (moment(balanceDate).isBetween(moment(from), moment(to), undefined, '[]')) {
           result.push(balance);
         }
@@ -60,7 +69,7 @@ export function getHistoricalBalance(from: string, to: string, sort: string): Pr
 
 
       // sort final result
-      result.sort((a: any, b: any) => {
+      result.sort((a: Balance, b: Balance) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
         return sort == "asc" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
