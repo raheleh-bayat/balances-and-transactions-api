@@ -98,6 +98,46 @@
           }
         }
       }
+    },
+    "/historical-balances": {
+      "get": {
+        "security": [
+          {
+            "xApiKey": []
+          }
+        ],
+        "description": "Get the daily balance for a specific date range",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "amount": {
+                        "type": "number"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "enum": [
+                          "EUR"
+                        ]
+                      },
+                      "date": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
