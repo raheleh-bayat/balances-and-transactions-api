@@ -87,5 +87,6 @@ npm run lint
 
 ## Swagger
 - You can find more details in the [swagger.json]('./swagger.json'). 
+
 ## Author
 This module was created by [Raheleh Bayat]( https://github.com/raheleh-bayat). If you have any questions or issues, please feel free to contact me or open an issue on GitHub.
